@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 
 // Mock OrbitStage since WebGL context is not supported in jsdom
@@ -43,16 +43,16 @@ describe('App Integration', () => {
     const stage = screen.getByTestId('mock-orbit-stage');
     expect(stage).toHaveAttribute('data-preset', 'combo');
 
-    const burgerPreset = screen.getByRole('button', { name: /smash burger/i });
+    const burgerPreset = screen.getByRole('button', { name: /focus burger/i });
     fireEvent.click(burgerPreset);
     expect(stage).toHaveAttribute('data-preset', 'burger');
 
-    const friesPreset = screen.getByRole('button', { name: /crispy fries/i });
+    const friesPreset = screen.getByRole('button', { name: /focus fries/i });
     fireEvent.click(friesPreset);
     expect(stage).toHaveAttribute('data-preset', 'fries');
   });
 
-  it('opens and closes order modal from CTA button', () => {
+  it('opens and closes order modal from CTA button', async () => {
     render(<App />);
 
     const orderBtn = screen.getByRole('button', { name: /order combo/i });
@@ -64,6 +64,8 @@ describe('App Integration', () => {
     const closeBtn = screen.getByRole('button', { name: /close order modal/i });
     fireEvent.click(closeBtn);
 
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
   });
 });

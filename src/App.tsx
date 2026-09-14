@@ -26,7 +26,6 @@ export const App: React.FC = () => {
       <OrbitStage
         theme={theme}
         preset={preset}
-        onPresetChange={setPreset}
       />
 
       {/* 2D Luxury Editorial Poster UI Overlay */}

@@ -9,7 +9,6 @@ import { ThemeMode, CameraPreset } from '../types';
 interface OrbitStageProps {
   theme: ThemeMode;
   preset: CameraPreset;
-  onPresetChange?: (preset: CameraPreset) => void;
 }
 
 // Preset camera coordinates & target focus points
@@ -28,9 +27,16 @@ const PRESET_CONFIGS: Record<CameraPreset, { position: [number, number, number];
   },
 };
 
-function CameraRig({ preset, isInteracting }: { preset: CameraPreset; isInteracting: boolean }) {
+function CameraRig({
+  preset,
+  isInteracting,
+  controlsRef,
+}: {
+  preset: CameraPreset;
+  isInteracting: boolean;
+  controlsRef: React.RefObject<OrbitControlsImpl | null>;
+}) {
   const { camera } = useThree();
-  const controlsRef = useRef<OrbitControlsImpl>(null);
   const targetPos = useRef(new THREE.Vector3(...PRESET_CONFIGS[preset].position));
   const targetLook = useRef(new THREE.Vector3(...PRESET_CONFIGS[preset].target));
 
@@ -41,8 +47,7 @@ function CameraRig({ preset, isInteracting }: { preset: CameraPreset; isInteract
 
   useFrame((_, delta) => {
     if (!isInteracting && controlsRef.current) {
-      // Smoothly lerp camera position toward preset target
-      const lerpFactor = Math.min(delta * 2.5, 0.1);
+      const lerpFactor = Math.min(delta * 3.0, 0.15);
       camera.position.lerp(targetPos.current, lerpFactor);
       controlsRef.current.target.lerp(targetLook.current, lerpFactor);
       controlsRef.current.update();
@@ -165,7 +170,7 @@ export function OrbitStage({ theme, preset }: OrbitStageProps) {
           makeDefault
         />
 
-        <CameraRig preset={preset} isInteracting={isInteracting} />
+        <CameraRig preset={preset} isInteracting={isInteracting} controlsRef={controlsRef} />
       </Canvas>
     </div>
   );

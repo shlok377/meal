@@ -54,11 +54,11 @@ describe('EditorialOverlay', () => {
       />
     );
 
-    const burgerBtn = screen.getByRole('button', { name: /smash burger/i });
+    const burgerBtn = screen.getByRole('button', { name: /focus burger/i });
     fireEvent.click(burgerBtn);
     expect(handleSelectPreset).toHaveBeenCalledWith('burger');
 
-    const friesBtn = screen.getByRole('button', { name: /crispy fries/i });
+    const friesBtn = screen.getByRole('button', { name: /focus fries/i });
     fireEvent.click(friesBtn);
     expect(handleSelectPreset).toHaveBeenCalledWith('fries');
   });

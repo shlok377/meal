@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sun, Moon, Sparkles, Layers, UtensilsCrossed, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { ThemeMode, CameraPreset, MealConfig } from '../types';
 
 interface EditorialOverlayProps {
@@ -10,6 +11,16 @@ interface EditorialOverlayProps {
   onSelectPreset: (preset: CameraPreset) => void;
   onOpenOrder: () => void;
 }
+
+const PRESET_OPTIONS: Array<{
+  id: CameraPreset;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+}> = [
+  { id: 'combo', label: 'Full Combo', icon: Sparkles },
+  { id: 'burger', label: 'Focus Burger', icon: Layers },
+  { id: 'fries', label: 'Focus Fries', icon: UtensilsCrossed },
+];
 
 export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
   config,
@@ -54,19 +65,19 @@ export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
             {isDark ? (
               <>
                 <Moon className="w-3.5 h-3.5 text-amber-400 fill-amber-400/20" />
-                <span className="text-[11px] font-sans uppercase tracking-widest text-neutral-200">Smokehouse</span>
+                <span className="text-[11px] font-sans uppercase tracking-widest text-neutral-200">Smokehouse Grill</span>
               </>
             ) : (
               <>
                 <Sun className="w-3.5 h-3.5 text-amber-600 fill-amber-600/20" />
-                <span className="text-[11px] font-sans uppercase tracking-widest text-neutral-800">Diner</span>
+                <span className="text-[11px] font-sans uppercase tracking-widest text-neutral-800">Artisan Diner</span>
               </>
             )}
           </button>
         </div>
       </header>
 
-      {/* 2. REPEATING LUXURY STACKED DISPLAY TYPOGRAPHY (Layered behind the 3D model) */}
+      {/* 2. REPEATING LUXURY STACKED DISPLAY TYPOGRAPHY (Layered behind 3D meal) */}
       <div 
         aria-hidden="true" 
         className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none -z-10 leading-[0.88] opacity-90 dark:opacity-85"
@@ -90,39 +101,24 @@ export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
       {/* 3. CENTER FLOATING CAMERA PRESET PILLS */}
       <div className="w-full flex justify-center pointer-events-auto my-auto pt-44 md:pt-64">
         <div className="flex items-center gap-1.5 p-1 rounded-full border border-neutral-900/10 dark:border-neutral-100/10 bg-neutral-900/5 dark:bg-neutral-100/5 backdrop-blur-md shadow-lg">
-          <button
-            onClick={() => onSelectPreset('combo')}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium tracking-wider uppercase transition-all duration-300 ${
-              preset === 'combo'
-                ? 'bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 shadow-md'
-                : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
-            }`}
-          >
-            <Sparkles className="w-3 h-3" />
-            <span>Full Combo</span>
-          </button>
-          <button
-            onClick={() => onSelectPreset('burger')}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium tracking-wider uppercase transition-all duration-300 ${
-              preset === 'burger'
-                ? 'bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 shadow-md'
-                : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
-            }`}
-          >
-            <Layers className="w-3 h-3" />
-            <span>Smash Burger</span>
-          </button>
-          <button
-            onClick={() => onSelectPreset('fries')}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium tracking-wider uppercase transition-all duration-300 ${
-              preset === 'fries'
-                ? 'bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 shadow-md'
-                : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
-            }`}
-          >
-            <UtensilsCrossed className="w-3 h-3" />
-            <span>Crispy Fries</span>
-          </button>
+          {PRESET_OPTIONS.map((item) => {
+            const Icon = item.icon;
+            const isActive = preset === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => onSelectPreset(item.id)}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium tracking-wider uppercase transition-all duration-300 ${
+                  isActive
+                    ? 'bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 shadow-md'
+                    : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
+                }`}
+              >
+                <Icon className="w-3 h-3" />
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -158,13 +154,15 @@ export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
             {config.narrativeCopy}
           </p>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={onOpenOrder}
-            className="group flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-neutral-900 dark:bg-amber-500 text-white dark:text-neutral-950 text-xs font-sans font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95 cursor-pointer"
+            className="group flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-neutral-900 dark:bg-amber-500 text-white dark:text-neutral-950 text-xs font-sans font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer"
           >
             <span>Order Combo</span>
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-          </button>
+          </motion.button>
         </div>
       </footer>
 
