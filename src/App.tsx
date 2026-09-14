@@ -23,10 +23,13 @@ export const App: React.FC = () => {
         theme === 'dark' ? 'bg-[#131316] text-[#EDE8DF]' : 'bg-[#F7F3EA] text-[#141414]'
       }`}
     >
-      {/* LAYER 0 (z-0): Background Stacked Typography (pointer-events-none, never blocks drag) */}
-      <BackgroundTypography title={mealData.title} />
+      {/* LAYER 0 (z-0): Background Stacked Typography (animates out on burger/fries focus, in on combo) */}
+      <BackgroundTypography 
+        title={mealData.title} 
+        isVisible={preset === 'combo'}
+      />
 
-      {/* LAYER 1 (z-10): 3D WebGL Orbit Canvas (receives all mouse/touch drag events across entire background) */}
+      {/* LAYER 1 (z-10): 3D WebGL Orbit Canvas */}
       <OrbitStage
         theme={theme}
         preset={preset}

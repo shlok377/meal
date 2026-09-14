@@ -11,19 +11,19 @@ interface OrbitStageProps {
   preset: CameraPreset;
 }
 
-// Preset camera coordinates & target focus points tuned for 3x larger model
+// Preset camera coordinates & target focus points tuned for balanced, gentle motion
 const PRESET_CONFIGS: Record<CameraPreset, { position: [number, number, number]; target: [number, number, number] }> = {
   combo: {
-    position: [0, 1.2, 3.2],
+    position: [0, 1.1, 3.2],
     target: [0, 0, 0],
   },
   burger: {
-    position: [1.1, 0.65, 2.1],
-    target: [0.55, -0.1, 0.1],
+    position: [0.95, 0.55, 2.3],
+    target: [0.45, -0.08, 0.05],
   },
   fries: {
-    position: [-1.3, 1.2, 2.3],
-    target: [-0.65, 0.15, -0.1],
+    position: [-0.75, 0.75, 2.45],
+    target: [-0.35, 0.08, 0],
   },
 };
 
@@ -47,7 +47,7 @@ function CameraRig({
 
   useFrame((_, delta) => {
     if (!isInteracting && controlsRef.current) {
-      const lerpFactor = Math.min(delta * 3.0, 0.15);
+      const lerpFactor = Math.min(delta * 2.8, 0.12);
       camera.position.lerp(targetPos.current, lerpFactor);
       controlsRef.current.target.lerp(targetLook.current, lerpFactor);
       controlsRef.current.update();
@@ -138,7 +138,7 @@ export function OrbitStage({ theme, preset }: OrbitStageProps) {
     <div className="absolute inset-0 w-full h-full pointer-events-auto z-10" data-testid="orbit-stage">
       <Canvas
         shadows
-        camera={{ position: [0, 1.2, 3.2], fov: 42 }}
+        camera={{ position: [0, 1.1, 3.2], fov: 42 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       >
         <LightingRig theme={theme} />
@@ -164,7 +164,7 @@ export function OrbitStage({ theme, preset }: OrbitStageProps) {
           minPolarAngle={Math.PI / 6} // ~30 deg
           maxPolarAngle={Math.PI / 2.15} // ~83 deg
           autoRotate={autoRotate}
-          autoRotateSpeed={1.0}
+          autoRotateSpeed={0.35} // Smooth, slow, cinematic idle rotation
           onStart={handleStart}
           onEnd={handleEnd}
           makeDefault

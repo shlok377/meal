@@ -4,7 +4,7 @@ import { EditorialOverlay } from './EditorialOverlay';
 import { mealData } from '../data/mealData';
 
 describe('EditorialOverlay', () => {
-  it('renders editorial categories, price, and cursive signature', () => {
+  it('renders editorial categories, price, and cursive signature for combo preset', () => {
     render(
       <EditorialOverlay
         config={mealData}
@@ -17,10 +17,44 @@ describe('EditorialOverlay', () => {
     );
 
     expect(screen.getByText('AMERICAN CLASSIC')).toBeInTheDocument();
-    expect(screen.getByText('GOURMET EDITION')).toBeInTheDocument();
+    expect(screen.getByText('GOURMET COMBO')).toBeInTheDocument();
     expect(screen.getByText('@ ₹349')).toBeInTheDocument();
     expect(screen.getByText('Flavour trails')).toBeInTheDocument();
-    expect(screen.getByText(mealData.narrativeCopy)).toBeInTheDocument();
+    expect(screen.getByText(mealData.presetDetails.combo.description)).toBeInTheDocument();
+  });
+
+  it('renders burger-specific information when burger preset is active', () => {
+    render(
+      <EditorialOverlay
+        config={mealData}
+        theme="light"
+        preset="burger"
+        onToggleTheme={vi.fn()}
+        onSelectPreset={vi.fn()}
+        onOpenOrder={vi.fn()}
+      />
+    );
+
+    expect(screen.getByText('THE HERO')).toBeInTheDocument();
+    expect(screen.getByText('DOUBLE SMASHED ANGUS BURGER')).toBeInTheDocument();
+    expect(screen.getByText(mealData.presetDetails.burger.description)).toBeInTheDocument();
+  });
+
+  it('renders fries-specific information when fries preset is active', () => {
+    render(
+      <EditorialOverlay
+        config={mealData}
+        theme="light"
+        preset="fries"
+        onToggleTheme={vi.fn()}
+        onSelectPreset={vi.fn()}
+        onOpenOrder={vi.fn()}
+      />
+    );
+
+    expect(screen.getByText('SIDES & DIP')).toBeInTheDocument();
+    expect(screen.getByText('CRISPY GOLDEN FRIES & KETCHUP')).toBeInTheDocument();
+    expect(screen.getByText(mealData.presetDetails.fries.description)).toBeInTheDocument();
   });
 
   it('triggers onToggleTheme when theme toggle button is clicked', () => {

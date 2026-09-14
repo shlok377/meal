@@ -13,6 +13,13 @@ export interface MacroNutrient {
   value: string;
 }
 
+export interface PresetDetail {
+  tag: string;
+  headline: string;
+  description: string;
+  badge: string;
+}
+
 export interface MealConfig {
   title: string;
   subtitle: string;
@@ -23,6 +30,7 @@ export interface MealConfig {
   priceAmount: number;
   signature: string;
   narrativeCopy: string;
+  presetDetails: Record<CameraPreset, PresetDetail>;
   ingredients: Ingredient[];
   macros: MacroNutrient[];
 }

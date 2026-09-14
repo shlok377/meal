@@ -10,6 +10,26 @@ export const mealData: MealConfig = {
   priceAmount: 349,
   signature: "Flavour trails",
   narrativeCopy: "THIS ARTISAN MEAL OFFERS A PERFECT HARMONY OF JUICY SMASHED PATTIES, CRISPY GOLDEN FRIES, & SIGNATURE DIP.",
+  presetDetails: {
+    combo: {
+      tag: "GOURMET COMBO",
+      headline: "THE ARTISAN MEAL EXPERIENCE",
+      description: "THIS ARTISAN MEAL OFFERS A PERFECT HARMONY OF JUICY SMASHED PATTIES, CRISPY GOLDEN FRIES, & SIGNATURE DIP.",
+      badge: "Full Combo • 780 kcal • 48g Protein",
+    },
+    burger: {
+      tag: "THE HERO",
+      headline: "DOUBLE SMASHED ANGUS BURGER",
+      description: "TWO 100% PRIME ANGUS BEEF PATTIES SEARED WITH CRISPY LACY EDGES, DOUBLE MELTED WISCONSIN CHEDDAR, FRESH CRISP LETTUCE, RIPE TOMATOES & TOASTED POTATO BRIOCHE.",
+      badge: "100% Prime Angus Beef • Double Melted Cheddar",
+    },
+    fries: {
+      tag: "SIDES & DIP",
+      headline: "CRISPY GOLDEN FRIES & KETCHUP",
+      description: "DOUBLE-FRIED IDAHO RUSSET POTATOES CRISPED TO GOLDEN PERFECTION, TOSSED IN SMOKED SEA SALT & SERVED WITH VINTAGE BOTTLING KETCHUP.",
+      badge: "Double Fried • Smoked Sea Salt Rub",
+    },
+  },
   ingredients: [
     {
       name: "Double Angus Smashed Patties",
