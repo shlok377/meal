@@ -64,7 +64,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80"
           onClick={onClose}
           role="dialog"
           aria-modal="true"
@@ -86,7 +86,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
             <button
               onClick={onClose}
               aria-label="Close order modal"
-              className="absolute top-5 right-5 p-2 rounded-full hover:bg-neutral-500/10 transition-colors text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
+              className="absolute top-5 right-5 p-2 rounded-full hover:bg-neutral-500/10 transition-colors text-neutral-500 hover:text-neutral-900 dark:hover:text-white cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -155,7 +155,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
                       aria-label="Decrease quantity"
-                      className="p-1.5 rounded-full hover:bg-neutral-500/20 text-neutral-700 dark:text-neutral-300 transition-colors"
+                      className="p-1.5 rounded-full hover:bg-neutral-500/20 text-neutral-700 dark:text-neutral-300 transition-colors cursor-pointer"
                     >
                       <Minus className="w-3.5 h-3.5" />
                     </button>
@@ -163,7 +163,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
                     <button
                       onClick={() => setQuantity(quantity + 1)}
                       aria-label="Increase quantity"
-                      className="p-1.5 rounded-full hover:bg-neutral-500/20 text-neutral-700 dark:text-neutral-300 transition-colors"
+                      className="p-1.5 rounded-full hover:bg-neutral-500/20 text-neutral-700 dark:text-neutral-300 transition-colors cursor-pointer"
                     >
                       <Plus className="w-3.5 h-3.5" />
                     </button>

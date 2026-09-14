@@ -12,7 +12,7 @@ export function MealModel({ floatEnabled = true }: MealModelProps) {
   const groupRef = useRef<THREE.Group>(null);
 
   useEffect(() => {
-    // Enable shadows and optimize materials on all child meshes
+    // Enable shadows on all child meshes
     scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         child.castShadow = true;
@@ -24,14 +24,15 @@ export function MealModel({ floatEnabled = true }: MealModelProps) {
   useFrame((state) => {
     if (groupRef.current && floatEnabled) {
       // Gentle subtle floating animation
-      groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.2) * 0.05;
+      groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.2) * 0.06;
     }
   });
 
   return (
     <group ref={groupRef} position={[0, -0.05, 0]}>
       <Center>
-        <primitive object={scene} scale={1.85} />
+        {/* Scaled 3x larger for commanding hero presence */}
+        <primitive object={scene} scale={5.5} />
       </Center>
     </group>
   );

@@ -11,19 +11,19 @@ interface OrbitStageProps {
   preset: CameraPreset;
 }
 
-// Preset camera coordinates & target focus points
+// Preset camera coordinates & target focus points tuned for 3x larger model
 const PRESET_CONFIGS: Record<CameraPreset, { position: [number, number, number]; target: [number, number, number] }> = {
   combo: {
-    position: [0, 1.1, 2.5],
+    position: [0, 1.2, 3.2],
     target: [0, 0, 0],
   },
   burger: {
-    position: [0.65, 0.5, 1.5],
-    target: [0.3, -0.05, 0],
+    position: [1.1, 0.65, 2.1],
+    target: [0.55, -0.1, 0.1],
   },
   fries: {
-    position: [-0.75, 0.75, 1.7],
-    target: [-0.35, 0.1, 0],
+    position: [-1.3, 1.2, 2.3],
+    target: [-0.65, 0.15, -0.1],
   },
 };
 
@@ -100,7 +100,7 @@ function LightingRig({ theme }: { theme: ThemeMode }) {
 function LoadingFallback() {
   return (
     <Html center>
-      <div className="flex flex-col items-center justify-center p-6 rounded-2xl bg-black/40 backdrop-blur-md text-amber-300">
+      <div className="flex flex-col items-center justify-center p-6 rounded-2xl bg-neutral-900/90 text-amber-300 shadow-xl border border-neutral-700/50">
         <div className="w-10 h-10 border-3 border-amber-400 border-t-transparent rounded-full animate-spin mb-3"></div>
         <span className="font-serif tracking-widest text-sm uppercase text-white/90">Preparing 3D Meal...</span>
       </div>
@@ -138,7 +138,7 @@ export function OrbitStage({ theme, preset }: OrbitStageProps) {
     <div className="absolute inset-0 w-full h-full pointer-events-auto z-10" data-testid="orbit-stage">
       <Canvas
         shadows
-        camera={{ position: [0, 1.1, 2.5], fov: 40 }}
+        camera={{ position: [0, 1.2, 3.2], fov: 42 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       >
         <LightingRig theme={theme} />
@@ -146,11 +146,11 @@ export function OrbitStage({ theme, preset }: OrbitStageProps) {
         <Suspense fallback={<LoadingFallback />}>
           <MealModel floatEnabled={!isInteracting} />
           <ContactShadows
-            position={[0, -0.68, 0]}
+            position={[0, -0.85, 0]}
             opacity={theme === 'dark' ? 0.8 : 0.45}
-            scale={7}
+            scale={9}
             blur={2.2}
-            far={1.8}
+            far={2.0}
             color={theme === 'dark' ? '#000000' : '#332211'}
           />
         </Suspense>
@@ -159,8 +159,8 @@ export function OrbitStage({ theme, preset }: OrbitStageProps) {
           ref={controlsRef}
           enablePan={false}
           enableZoom={true}
-          minDistance={1.4}
-          maxDistance={4.2}
+          minDistance={1.8}
+          maxDistance={5.5}
           minPolarAngle={Math.PI / 6} // ~30 deg
           maxPolarAngle={Math.PI / 2.15} // ~83 deg
           autoRotate={autoRotate}

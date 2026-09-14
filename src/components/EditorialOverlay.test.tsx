@@ -4,7 +4,7 @@ import { EditorialOverlay } from './EditorialOverlay';
 import { mealData } from '../data/mealData';
 
 describe('EditorialOverlay', () => {
-  it('renders editorial categories, title, price, and cursive signature', () => {
+  it('renders editorial categories, price, and cursive signature', () => {
     render(
       <EditorialOverlay
         config={mealData}
@@ -20,7 +20,7 @@ describe('EditorialOverlay', () => {
     expect(screen.getByText('GOURMET EDITION')).toBeInTheDocument();
     expect(screen.getByText('@ ₹349')).toBeInTheDocument();
     expect(screen.getByText('Flavour trails')).toBeInTheDocument();
-    expect(screen.getAllByText('SMASH BURGER').length).toBeGreaterThanOrEqual(3);
+    expect(screen.getByText(mealData.narrativeCopy)).toBeInTheDocument();
   });
 
   it('triggers onToggleTheme when theme toggle button is clicked', () => {

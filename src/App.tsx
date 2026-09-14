@@ -1,4 +1,5 @@
 import React from 'react';
+import { BackgroundTypography } from './components/BackgroundTypography';
 import { OrbitStage } from './components/OrbitStage';
 import { EditorialOverlay } from './components/EditorialOverlay';
 import { OrderModal } from './components/OrderModal';
@@ -22,13 +23,16 @@ export const App: React.FC = () => {
         theme === 'dark' ? 'bg-[#131316] text-[#EDE8DF]' : 'bg-[#F7F3EA] text-[#141414]'
       }`}
     >
-      {/* 3D WebGL Orbit Canvas (z-10, sits between background typography z-0 and foreground UI z-20) */}
+      {/* LAYER 0 (z-0): Background Stacked Typography (pointer-events-none, never blocks drag) */}
+      <BackgroundTypography title={mealData.title} />
+
+      {/* LAYER 1 (z-10): 3D WebGL Orbit Canvas (receives all mouse/touch drag events across entire background) */}
       <OrbitStage
         theme={theme}
         preset={preset}
       />
 
-      {/* 2D Luxury Editorial Poster UI Overlay */}
+      {/* LAYER 2 (z-20): 2D Luxury Editorial Poster UI Controls */}
       <EditorialOverlay
         config={mealData}
         theme={theme}
@@ -38,7 +42,7 @@ export const App: React.FC = () => {
         onOpenOrder={openOrder}
       />
 
-      {/* Artisan Meal Order & Nutritional Breakdown Modal (z-50) */}
+      {/* LAYER 3 (z-50): Artisan Meal Order & Nutritional Breakdown Modal */}
       <OrderModal
         isOpen={isOrderOpen}
         onClose={closeOrder}
