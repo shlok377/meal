@@ -9,36 +9,38 @@ interface BackgroundTypographyProps {
 const containerVariants: Variants = {
   visible: {
     transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.05,
+      staggerChildren: 0.16,
+      delayChildren: 0.1,
     },
   },
   hidden: {
     transition: {
-      staggerChildren: 0.05,
+      staggerChildren: 0.12,
       staggerDirection: -1,
     },
   },
 };
 
+// Pure fading in and fading out with custom opacity per row
 const rowVariants: Variants = {
-  visible: {
-    y: 0,
-    scale: 1,
+  visible: (customOpacity: number) => ({
+    opacity: customOpacity,
     transition: {
-      duration: 0.6,
-      ease: 'easeOut',
+      duration: 0.85,
+      ease: [0.4, 0, 0.2, 1], // smooth medium ease
     },
-  },
+  }),
   hidden: {
-    y: -25,
-    scale: 0.98,
+    opacity: 0,
     transition: {
-      duration: 0.35,
-      ease: 'easeIn',
+      duration: 0.65,
+      ease: [0.4, 0, 0.2, 1],
     },
   },
 };
+
+// Row target opacities from top to bottom (bottom-most is the lightest)
+const ROW_OPACITIES = [0.35, 0.22, 0.12, 0.04];
 
 export const BackgroundTypography: React.FC<BackgroundTypographyProps> = ({
   title,
@@ -58,41 +60,16 @@ export const BackgroundTypography: React.FC<BackgroundTypographyProps> = ({
             exit="hidden"
             className="w-full text-center flex flex-col items-center justify-center space-y-[-1vw] md:space-y-[-1.5vw] translate-y-[-2vh] pointer-events-none"
           >
-            {/* Row 1 (Top) - Clearly visible display text */}
-            <motion.h1
-              variants={rowVariants}
-              style={{ opacity: 0.35 }}
-              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900 dark:text-neutral-100 uppercase pointer-events-none"
-            >
-              {title}
-            </motion.h1>
-
-            {/* Row 2 - Intermediate soft fade */}
-            <motion.div
-              variants={rowVariants}
-              style={{ opacity: 0.22 }}
-              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900 dark:text-neutral-100 uppercase pointer-events-none"
-            >
-              {title}
-            </motion.div>
-
-            {/* Row 3 - Subtle faint fade */}
-            <motion.div
-              variants={rowVariants}
-              style={{ opacity: 0.12 }}
-              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900 dark:text-neutral-100 uppercase pointer-events-none"
-            >
-              {title}
-            </motion.div>
-
-            {/* Row 4 (Bottom-most) - Guaranteed to be the LIGHTEST whisper of text */}
-            <motion.div
-              variants={rowVariants}
-              style={{ opacity: 0.05 }}
-              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900 dark:text-neutral-100 uppercase pointer-events-none"
-            >
-              {title}
-            </motion.div>
+            {ROW_OPACITIES.map((opacity, idx) => (
+              <motion.div
+                key={idx}
+                custom={opacity}
+                variants={rowVariants}
+                className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900 dark:text-neutral-100 uppercase pointer-events-none"
+              >
+                {title}
+              </motion.div>
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
