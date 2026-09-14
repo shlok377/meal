@@ -38,8 +38,8 @@ export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
   return (
     <div className="absolute inset-0 w-full h-full min-h-screen pointer-events-none select-none overflow-hidden z-20">
       
-      {/* 1. TOP HEADER SECTION */}
-      <header className="w-full flex items-center justify-between p-6 md:p-12 pointer-events-auto">
+      {/* 1. TOP HEADER (Anchored firmly at top) */}
+      <header className="absolute top-0 inset-x-0 w-full flex items-center justify-between p-6 md:p-12 pointer-events-auto z-20">
         {/* Left Category with minimalist line */}
         <div className="flex flex-col">
           <div className="flex items-center gap-3">
@@ -50,7 +50,7 @@ export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
           <div className="h-[1.5px] w-24 md:w-36 bg-neutral-900/30 dark:bg-neutral-100/30 mt-1"></div>
         </div>
 
-        {/* Center/Right: Theme Mode Switcher & Right Category */}
+        {/* Right Category & Theme Mode Switcher */}
         <div className="flex items-center gap-4 md:gap-8">
           <div className="hidden sm:flex flex-col items-end text-right">
             <span className="font-sans text-xs md:text-sm font-semibold tracking-[0.25em] uppercase text-neutral-800 dark:text-neutral-200">
@@ -80,18 +80,18 @@ export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
         </div>
       </header>
 
-      {/* 2. UPPER-HALF SEPARATED INFO PANELS (NEAR HALFWAY LINE) */}
+      {/* 2. UPPER-HALF SEPARATED INFO PANELS (Near the halfway line, left and right) */}
 
-      {/* LEFT SIDE PANEL: FRIES INFO (Initially hidden, only visible when fries is focused) */}
-      <div className="absolute left-6 md:left-12 lg:left-16 top-[42%] -translate-y-1/2 max-w-xs md:max-w-sm pointer-events-none">
+      {/* Left Side Panel: Fries Info (Only visible when Focus Fries is active) */}
+      <div className="absolute left-6 md:left-12 lg:left-16 top-[38%] md:top-[40%] -translate-y-1/2 max-w-xs md:max-w-sm pointer-events-none z-20">
         <AnimatePresence>
           {preset === 'fries' && (
             <motion.div
-              initial={{ opacity: 0, x: -24 }}
+              initial={{ opacity: 0, x: -25 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -24 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="space-y-3 pointer-events-auto p-5 rounded-2xl bg-white/70 dark:bg-neutral-900/75 border border-neutral-900/10 dark:border-neutral-100/10 shadow-xl"
+              exit={{ opacity: 0, x: -25 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+              className="space-y-3 pointer-events-auto p-5 rounded-2xl bg-white/80 dark:bg-neutral-900/85 border border-neutral-900/10 dark:border-neutral-100/10 shadow-2xl"
             >
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-800 dark:text-amber-400 text-[10px] font-sans font-bold tracking-wider uppercase">
                 <UtensilsCrossed className="w-3 h-3" />
@@ -114,16 +114,16 @@ export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
         </AnimatePresence>
       </div>
 
-      {/* RIGHT SIDE PANEL: BURGER INFO (Initially hidden, only visible when burger is focused) */}
-      <div className="absolute right-6 md:right-12 lg:right-16 top-[42%] -translate-y-1/2 max-w-xs md:max-w-sm text-right pointer-events-none">
+      {/* Right Side Panel: Burger Info (Only visible when Focus Burger is active) */}
+      <div className="absolute right-6 md:right-12 lg:right-16 top-[38%] md:top-[40%] -translate-y-1/2 max-w-xs md:max-w-sm text-right pointer-events-none z-20">
         <AnimatePresence>
           {preset === 'burger' && (
             <motion.div
-              initial={{ opacity: 0, x: 24 }}
+              initial={{ opacity: 0, x: 25 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 24 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="space-y-3 pointer-events-auto p-5 rounded-2xl bg-white/70 dark:bg-neutral-900/75 border border-neutral-900/10 dark:border-neutral-100/10 shadow-xl"
+              exit={{ opacity: 0, x: 25 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+              className="space-y-3 pointer-events-auto p-5 rounded-2xl bg-white/80 dark:bg-neutral-900/85 border border-neutral-900/10 dark:border-neutral-100/10 shadow-2xl"
             >
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-800 dark:text-amber-400 text-[10px] font-sans font-bold tracking-wider uppercase">
                 <Layers className="w-3 h-3" />
@@ -146,11 +146,11 @@ export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
         </AnimatePresence>
       </div>
 
-      {/* 3. BOTTOM FOOTER SECTION */}
-      <footer className="w-full flex flex-col md:flex-row items-end justify-between gap-6 p-6 md:p-12 pb-16 md:pb-16 pointer-events-auto">
+      {/* 3. BOTTOM FOOTER SECTION (Anchored firmly at the bottom of the page) */}
+      <footer className="absolute bottom-0 inset-x-0 w-full flex flex-col md:flex-row items-center md:items-end justify-between gap-4 md:gap-6 p-6 md:p-12 pb-6 md:pb-8 pointer-events-none z-20">
         
         {/* Bottom Left: Price & Brand Signature */}
-        <div className="flex flex-col items-start space-y-1 pointer-events-auto">
+        <div className="flex flex-col items-start space-y-1 pointer-events-auto self-start md:self-end">
           <div className="flex items-baseline gap-2">
             <span className="font-sans text-xs tracking-[0.2em] font-semibold text-neutral-600 dark:text-neutral-400 uppercase">
               ONLY
@@ -166,8 +166,32 @@ export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
           </div>
         </div>
 
+        {/* Bottom Center: Focus Selector (At the very extreme bottom) */}
+        <div className="pointer-events-auto pb-1">
+          <div className="flex items-center gap-1.5 p-1 rounded-full border border-neutral-900/15 dark:border-neutral-100/15 bg-white/90 dark:bg-neutral-900/90 shadow-2xl">
+            {PRESET_OPTIONS.map((item) => {
+              const Icon = item.icon;
+              const isActive = preset === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => onSelectPreset(item.id)}
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-semibold tracking-wider uppercase transition-all duration-300 cursor-pointer ${
+                    isActive
+                      ? 'bg-neutral-900 dark:bg-amber-500 text-white dark:text-neutral-950 shadow-md scale-105'
+                      : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Bottom Right: Narrative Copy & Order Button */}
-        <div className="flex flex-col items-start md:items-end max-w-sm md:max-w-md text-left md:text-right space-y-3 pointer-events-auto">
+        <div className="flex flex-col items-start md:items-end max-w-xs md:max-w-sm text-left md:text-right space-y-3 pointer-events-auto self-end">
           {preset === 'combo' && (
             <p className="font-sans text-[11px] md:text-xs font-medium tracking-[0.14em] uppercase leading-relaxed text-neutral-700 dark:text-neutral-300">
               {comboDetail.description}
@@ -184,31 +208,8 @@ export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
           </motion.button>
         </div>
-      </footer>
 
-      {/* 4. FOCUS SELECTOR AT THE VERY EXTREME BOTTOM OF THE PAGE */}
-      <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-30 pointer-events-auto">
-        <div className="flex items-center gap-1.5 p-1 rounded-full border border-neutral-900/15 dark:border-neutral-100/15 bg-white/90 dark:bg-neutral-900/90 shadow-2xl">
-          {PRESET_OPTIONS.map((item) => {
-            const Icon = item.icon;
-            const isActive = preset === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => onSelectPreset(item.id)}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-semibold tracking-wider uppercase transition-all duration-300 cursor-pointer ${
-                  isActive
-                    ? 'bg-neutral-900 dark:bg-amber-500 text-white dark:text-neutral-950 shadow-md scale-105'
-                    : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{item.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      </footer>
 
     </div>
   );
