@@ -31,12 +31,15 @@ export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
   onOpenOrder,
 }) => {
   const isDark = theme === 'dark';
+  const burgerDetail = config.presetDetails.burger;
+  const friesDetail = config.presetDetails.fries;
+  const comboDetail = config.presetDetails.combo;
 
   return (
-    <div className="absolute inset-0 w-full h-full min-h-screen flex flex-col justify-between pointer-events-none select-none overflow-hidden p-6 md:p-12 z-20">
+    <div className="absolute inset-0 w-full h-full min-h-screen pointer-events-none select-none overflow-hidden z-20">
       
       {/* 1. TOP HEADER SECTION */}
-      <header className="w-full flex items-center justify-between pointer-events-auto">
+      <header className="w-full flex items-center justify-between p-6 md:p-12 pointer-events-auto">
         {/* Left Category with minimalist line */}
         <div className="flex flex-col">
           <div className="flex items-center gap-3">
@@ -77,136 +80,134 @@ export const EditorialOverlay: React.FC<EditorialOverlayProps> = ({
         </div>
       </header>
 
-      {/* 2. UPPER FOCUS INFORMATION CARDS (SEPARATED LEFT & RIGHT) */}
-      <div className="absolute top-24 md:top-28 inset-x-6 md:inset-x-12 flex justify-between pointer-events-none">
-        
-        {/* UPPER LEFT: FRIES FOCUS INFO CARD (Only visible when Fries focused) */}
+      {/* 2. UPPER-HALF SEPARATED INFO PANELS (NEAR HALFWAY LINE) */}
+
+      {/* LEFT SIDE PANEL: FRIES INFO (Initially hidden, only visible when fries is focused) */}
+      <div className="absolute left-6 md:left-12 lg:left-16 top-[42%] -translate-y-1/2 max-w-xs md:max-w-sm pointer-events-none">
         <AnimatePresence>
           {preset === 'fries' && (
             <motion.div
-              key="fries-card"
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -24 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.5, ease: 'easeInOut' }}
-              className="max-w-xs sm:max-w-sm flex flex-col items-start text-left space-y-2 p-4 rounded-2xl bg-white/70 dark:bg-neutral-900/75 border border-neutral-900/10 dark:border-neutral-100/10 shadow-lg pointer-events-auto"
+              exit={{ opacity: 0, x: -24 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="space-y-3 pointer-events-auto p-5 rounded-2xl bg-white/70 dark:bg-neutral-900/75 border border-neutral-900/10 dark:border-neutral-100/10 shadow-xl"
             >
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-800 dark:text-amber-400 text-[10px] font-sans font-bold tracking-wider uppercase">
                 <UtensilsCrossed className="w-3 h-3" />
-                <span>{config.presetDetails.fries.badge}</span>
+                <span>{friesDetail.tag}</span>
               </div>
-              
-              <h3 className="font-serif text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-tight">
-                {config.presetDetails.fries.headline}
-              </h3>
 
-              <p className="font-sans text-[11px] sm:text-xs font-medium tracking-[0.1em] uppercase leading-relaxed text-neutral-700 dark:text-neutral-300">
-                {config.presetDetails.fries.description}
+              <h2 className="font-serif text-lg md:text-xl font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-tight leading-snug">
+                {friesDetail.headline}
+              </h2>
+
+              <p className="font-sans text-[11px] md:text-xs font-medium tracking-[0.1em] uppercase leading-relaxed text-neutral-700 dark:text-neutral-300">
+                {friesDetail.description}
               </p>
+
+              <div className="text-[10px] font-sans font-semibold tracking-wider uppercase text-amber-600 dark:text-amber-400 pt-1">
+                {friesDetail.badge}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
 
-        {/* UPPER RIGHT: BURGER FOCUS INFO CARD (Only visible when Burger focused) */}
+      {/* RIGHT SIDE PANEL: BURGER INFO (Initially hidden, only visible when burger is focused) */}
+      <div className="absolute right-6 md:right-12 lg:right-16 top-[42%] -translate-y-1/2 max-w-xs md:max-w-sm text-right pointer-events-none">
         <AnimatePresence>
           {preset === 'burger' && (
             <motion.div
-              key="burger-card"
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.5, ease: 'easeInOut' }}
-              className="ml-auto max-w-xs sm:max-w-sm flex flex-col items-end text-right space-y-2 p-4 rounded-2xl bg-white/70 dark:bg-neutral-900/75 border border-neutral-900/10 dark:border-neutral-100/10 shadow-lg pointer-events-auto"
+              exit={{ opacity: 0, x: 24 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="space-y-3 pointer-events-auto p-5 rounded-2xl bg-white/70 dark:bg-neutral-900/75 border border-neutral-900/10 dark:border-neutral-100/10 shadow-xl"
             >
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-800 dark:text-amber-400 text-[10px] font-sans font-bold tracking-wider uppercase">
                 <Layers className="w-3 h-3" />
-                <span>{config.presetDetails.burger.badge}</span>
+                <span>{burgerDetail.tag}</span>
               </div>
-              
-              <h3 className="font-serif text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-tight">
-                {config.presetDetails.burger.headline}
-              </h3>
 
-              <p className="font-sans text-[11px] sm:text-xs font-medium tracking-[0.1em] uppercase leading-relaxed text-neutral-700 dark:text-neutral-300">
-                {config.presetDetails.burger.description}
+              <h2 className="font-serif text-lg md:text-xl font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-tight leading-snug">
+                {burgerDetail.headline}
+              </h2>
+
+              <p className="font-sans text-[11px] md:text-xs font-medium tracking-[0.1em] uppercase leading-relaxed text-neutral-700 dark:text-neutral-300">
+                {burgerDetail.description}
               </p>
+
+              <div className="text-[10px] font-sans font-semibold tracking-wider uppercase text-amber-600 dark:text-amber-400 pt-1">
+                {burgerDetail.badge}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
-
       </div>
 
-      {/* 3. BOTTOM SECTION (View Switcher + Price/Signature + Right Narrative & Order CTA) */}
-      <div className="w-full flex flex-col gap-6 pointer-events-none pb-2 mt-auto">
+      {/* 3. BOTTOM FOOTER SECTION */}
+      <footer className="w-full flex flex-col md:flex-row items-end justify-between gap-6 p-6 md:p-12 pb-16 md:pb-16 pointer-events-auto">
         
-        {/* VIEW SWITCHER PILLS (Positioned at bottom center) */}
-        <div className="w-full flex justify-center pointer-events-auto">
-          <div className="flex items-center gap-1.5 p-1.5 rounded-full border border-neutral-900/15 dark:border-neutral-100/15 bg-white/85 dark:bg-neutral-900/90 shadow-xl pointer-events-auto">
-            {PRESET_OPTIONS.map((item) => {
-              const Icon = item.icon;
-              const isActive = preset === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => onSelectPreset(item.id)}
-                  className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-sans font-semibold tracking-wider uppercase transition-all duration-300 cursor-pointer pointer-events-auto ${
-                    isActive
-                      ? 'bg-neutral-900 dark:bg-amber-500 text-white dark:text-neutral-950 shadow-md scale-105'
-                      : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
-                  }`}
-                >
-                  <Icon className="w-3.5 h-3.5" />
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
+        {/* Bottom Left: Price & Brand Signature */}
+        <div className="flex flex-col items-start space-y-1 pointer-events-auto">
+          <div className="flex items-baseline gap-2">
+            <span className="font-sans text-xs tracking-[0.2em] font-semibold text-neutral-600 dark:text-neutral-400 uppercase">
+              ONLY
+            </span>
+            <span className="font-serif text-2xl md:text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+              @ {config.priceCurrency}{config.priceAmount}
+            </span>
+          </div>
+          
+          {/* Cursive handwritten signature */}
+          <div className="font-script text-3xl md:text-4xl text-neutral-800/90 dark:text-neutral-200/90 rotate-[-2deg] tracking-wide pt-1">
+            {config.signature}
           </div>
         </div>
 
-        {/* FOOTER BAR: Left Price/Signature + Right Narrative Copy & Order Button */}
-        <footer className="w-full flex flex-col md:flex-row items-end justify-between gap-6 pointer-events-auto">
-          
-          {/* Bottom Left: Price & Brand Signature */}
-          <div className="flex flex-col items-start space-y-1 pointer-events-auto">
-            <div className="flex items-baseline gap-2">
-              <span className="font-sans text-xs tracking-[0.2em] font-semibold text-neutral-600 dark:text-neutral-400 uppercase">
-                ONLY
-              </span>
-              <span className="font-serif text-2xl md:text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
-                @ {config.priceCurrency}{config.priceAmount}
-              </span>
-            </div>
-            
-            {/* Cursive handwritten signature */}
-            <div className="font-script text-3xl md:text-4xl text-neutral-800/90 dark:text-neutral-200/90 rotate-[-2deg] tracking-wide pt-1">
-              {config.signature}
-            </div>
-          </div>
-
-          {/* Bottom Center / Drag Hint */}
-          <div className="hidden xl:flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-neutral-500/80 dark:text-neutral-400/70 pointer-events-none mb-2">
-            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-            <span>Drag 3D meal 360°</span>
-          </div>
-
-          {/* Bottom Right: Narrative Copy & Order Button */}
-          <div className="flex flex-col items-start md:items-end max-w-sm md:max-w-md text-left md:text-right space-y-3 pointer-events-auto">
+        {/* Bottom Right: Narrative Copy & Order Button */}
+        <div className="flex flex-col items-start md:items-end max-w-sm md:max-w-md text-left md:text-right space-y-3 pointer-events-auto">
+          {preset === 'combo' && (
             <p className="font-sans text-[11px] md:text-xs font-medium tracking-[0.14em] uppercase leading-relaxed text-neutral-700 dark:text-neutral-300">
-              {config.narrativeCopy}
+              {comboDetail.description}
             </p>
+          )}
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={onOpenOrder}
-              className="group flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-neutral-900 dark:bg-amber-500 text-white dark:text-neutral-950 text-xs font-sans font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer pointer-events-auto"
-            >
-              <span>Order Combo</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-            </motion.button>
-          </div>
-        </footer>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onOpenOrder}
+            className="group flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-neutral-900 dark:bg-amber-500 text-white dark:text-neutral-950 text-xs font-sans font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer pointer-events-auto"
+          >
+            <span>Order Combo</span>
+            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+          </motion.button>
+        </div>
+      </footer>
 
+      {/* 4. FOCUS SELECTOR AT THE VERY EXTREME BOTTOM OF THE PAGE */}
+      <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-30 pointer-events-auto">
+        <div className="flex items-center gap-1.5 p-1 rounded-full border border-neutral-900/15 dark:border-neutral-100/15 bg-white/90 dark:bg-neutral-900/90 shadow-2xl">
+          {PRESET_OPTIONS.map((item) => {
+            const Icon = item.icon;
+            const isActive = preset === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => onSelectPreset(item.id)}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-semibold tracking-wider uppercase transition-all duration-300 cursor-pointer ${
+                  isActive
+                    ? 'bg-neutral-900 dark:bg-amber-500 text-white dark:text-neutral-950 shadow-md scale-105'
+                    : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
     </div>

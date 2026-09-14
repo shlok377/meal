@@ -6,41 +6,38 @@ interface BackgroundTypographyProps {
   isVisible?: boolean;
 }
 
+// Slow/medium staggered fade-in / fade-out animation
 const containerVariants: Variants = {
   visible: {
     transition: {
-      staggerChildren: 0.16,
+      staggerChildren: 0.12,
       delayChildren: 0.1,
     },
   },
   hidden: {
     transition: {
-      staggerChildren: 0.12,
+      staggerChildren: 0.09,
       staggerDirection: -1,
     },
   },
 };
 
-// Pure fading in and fading out with custom opacity per row
 const rowVariants: Variants = {
-  visible: (customOpacity: number) => ({
-    opacity: customOpacity,
+  visible: {
+    opacity: 1,
     transition: {
-      duration: 0.85,
-      ease: [0.4, 0, 0.2, 1], // smooth medium ease
+      duration: 0.8,
+      ease: [0.25, 0.1, 0.25, 1], // Smooth medium cubic-bezier
     },
-  }),
+  },
   hidden: {
     opacity: 0,
     transition: {
-      duration: 0.65,
-      ease: [0.4, 0, 0.2, 1],
+      duration: 0.6,
+      ease: [0.25, 0.1, 0.25, 1],
     },
   },
 };
-
-// Row target opacities from top to bottom (bottom-most is the lightest)
-const ROW_OPACITIES = [0.35, 0.22, 0.12, 0.04];
 
 export const BackgroundTypography: React.FC<BackgroundTypographyProps> = ({
   title,
@@ -60,16 +57,37 @@ export const BackgroundTypography: React.FC<BackgroundTypographyProps> = ({
             exit="hidden"
             className="w-full text-center flex flex-col items-center justify-center space-y-[-1vw] md:space-y-[-1.5vw] translate-y-[-2vh] pointer-events-none"
           >
-            {ROW_OPACITIES.map((opacity, idx) => (
-              <motion.div
-                key={idx}
-                custom={opacity}
-                variants={rowVariants}
-                className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900 dark:text-neutral-100 uppercase pointer-events-none"
-              >
-                {title}
-              </motion.div>
-            ))}
+            {/* Row 1 - Top row (Darkest of the background stack) */}
+            <motion.h1
+              variants={rowVariants}
+              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900/35 dark:text-neutral-100/30 uppercase pointer-events-none"
+            >
+              {title}
+            </motion.h1>
+
+            {/* Row 2 - Medium */}
+            <motion.div
+              variants={rowVariants}
+              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900/20 dark:text-neutral-100/18 uppercase pointer-events-none"
+            >
+              {title}
+            </motion.div>
+
+            {/* Row 3 - Light */}
+            <motion.div
+              variants={rowVariants}
+              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900/10 dark:text-neutral-100/10 uppercase pointer-events-none"
+            >
+              {title}
+            </motion.div>
+
+            {/* Row 4 - Bottom-most row (Lightest of the entire stack) */}
+            <motion.div
+              variants={rowVariants}
+              className="hidden lg:block font-serif font-black tracking-[-0.04em] text-[11.5vw] text-neutral-900/5 dark:text-neutral-100/5 uppercase pointer-events-none"
+            >
+              {title}
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

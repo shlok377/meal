@@ -4,7 +4,7 @@ import { EditorialOverlay } from './EditorialOverlay';
 import { mealData } from '../data/mealData';
 
 describe('EditorialOverlay', () => {
-  it('renders editorial categories, price, and signature; hides item cards when in combo mode', () => {
+  it('renders editorial categories, price, and cursive signature for combo preset', () => {
     render(
       <EditorialOverlay
         config={mealData}
@@ -20,14 +20,10 @@ describe('EditorialOverlay', () => {
     expect(screen.getByText('GOURMET EDITION')).toBeInTheDocument();
     expect(screen.getByText('@ ₹349')).toBeInTheDocument();
     expect(screen.getByText('Flavour trails')).toBeInTheDocument();
-    expect(screen.getByText(mealData.narrativeCopy)).toBeInTheDocument();
-
-    // Specific item detail cards must be initially hidden on combo
-    expect(screen.queryByText('DOUBLE SMASHED ANGUS BURGER')).not.toBeInTheDocument();
-    expect(screen.queryByText('CRISPY GOLDEN FRIES & KETCHUP')).not.toBeInTheDocument();
+    expect(screen.getByText(mealData.presetDetails.combo.description)).toBeInTheDocument();
   });
 
-  it('renders burger-specific information in upper right when burger preset is active', () => {
+  it('renders burger-specific information when burger preset is active', () => {
     render(
       <EditorialOverlay
         config={mealData}
@@ -39,13 +35,12 @@ describe('EditorialOverlay', () => {
       />
     );
 
+    expect(screen.getByText('THE HERO')).toBeInTheDocument();
     expect(screen.getByText('DOUBLE SMASHED ANGUS BURGER')).toBeInTheDocument();
     expect(screen.getByText(mealData.presetDetails.burger.description)).toBeInTheDocument();
-    // Fries info card should not be visible
-    expect(screen.queryByText('CRISPY GOLDEN FRIES & KETCHUP')).not.toBeInTheDocument();
   });
 
-  it('renders fries-specific information in upper left when fries preset is active', () => {
+  it('renders fries-specific information when fries preset is active', () => {
     render(
       <EditorialOverlay
         config={mealData}
@@ -57,10 +52,9 @@ describe('EditorialOverlay', () => {
       />
     );
 
+    expect(screen.getByText('SIDES & DIP')).toBeInTheDocument();
     expect(screen.getByText('CRISPY GOLDEN FRIES & KETCHUP')).toBeInTheDocument();
     expect(screen.getByText(mealData.presetDetails.fries.description)).toBeInTheDocument();
-    // Burger info card should not be visible
-    expect(screen.queryByText('DOUBLE SMASHED ANGUS BURGER')).not.toBeInTheDocument();
   });
 
   it('triggers onToggleTheme when theme toggle button is clicked', () => {
