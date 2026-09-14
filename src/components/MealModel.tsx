@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { useGLTF } from '@react-three/drei';
+import { useGLTF, Center } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -12,7 +12,7 @@ export function MealModel({ floatEnabled = true }: MealModelProps) {
   const groupRef = useRef<THREE.Group>(null);
 
   useEffect(() => {
-    // Enable shadows on all child meshes
+    // Enable shadows and optimize materials on all child meshes
     scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         child.castShadow = true;
@@ -29,8 +29,10 @@ export function MealModel({ floatEnabled = true }: MealModelProps) {
   });
 
   return (
-    <group ref={groupRef} position={[0, -0.2, 0]} scale={1.15}>
-      <primitive object={scene} />
+    <group ref={groupRef} position={[0, -0.05, 0]}>
+      <Center>
+        <primitive object={scene} scale={1.85} />
+      </Center>
     </group>
   );
 }

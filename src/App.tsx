@@ -22,7 +22,7 @@ export const App: React.FC = () => {
         theme === 'dark' ? 'bg-[#131316] text-[#EDE8DF]' : 'bg-[#F7F3EA] text-[#141414]'
       }`}
     >
-      {/* 3D WebGL Orbit Canvas */}
+      {/* 3D WebGL Orbit Canvas (z-10, sits between background typography z-0 and foreground UI z-20) */}
       <OrbitStage
         theme={theme}
         preset={preset}
@@ -38,7 +38,7 @@ export const App: React.FC = () => {
         onOpenOrder={openOrder}
       />
 
-      {/* Artisan Meal Order & Nutritional Breakdown Modal */}
+      {/* Artisan Meal Order & Nutritional Breakdown Modal (z-50) */}
       <OrderModal
         isOpen={isOrderOpen}
         onClose={closeOrder}

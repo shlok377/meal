@@ -14,16 +14,16 @@ interface OrbitStageProps {
 // Preset camera coordinates & target focus points
 const PRESET_CONFIGS: Record<CameraPreset, { position: [number, number, number]; target: [number, number, number] }> = {
   combo: {
-    position: [0, 1.6, 3.8],
-    target: [0, -0.1, 0],
+    position: [0, 1.1, 2.5],
+    target: [0, 0, 0],
   },
   burger: {
-    position: [0.7, 0.9, 2.4],
-    target: [0.35, -0.15, 0.1],
+    position: [0.65, 0.5, 1.5],
+    target: [0.3, -0.05, 0],
   },
   fries: {
-    position: [-1.2, 1.3, 2.6],
-    target: [-0.55, 0.1, -0.1],
+    position: [-0.75, 0.75, 1.7],
+    target: [-0.35, 0.1, 0],
   },
 };
 
@@ -65,13 +65,13 @@ function LightingRig({ theme }: { theme: ThemeMode }) {
       {/* Ambient illumination */}
       <ambientLight
         color={isDark ? '#2D283E' : '#FFF9F0'}
-        intensity={isDark ? 0.9 : 1.5}
+        intensity={isDark ? 1.0 : 1.6}
       />
 
       {/* Main directional sun / spotlight */}
       <directionalLight
         position={isDark ? [4, 7, 3] : [5, 8, 4]}
-        intensity={isDark ? 2.6 : 2.2}
+        intensity={isDark ? 2.8 : 2.4}
         color={isDark ? '#F59E0B' : '#FFF4E0'}
         castShadow
         shadow-mapSize={[1024, 1024]}
@@ -81,14 +81,14 @@ function LightingRig({ theme }: { theme: ThemeMode }) {
       {/* Warm fill light */}
       <pointLight
         position={[-4, 3, -2]}
-        intensity={isDark ? 1.2 : 0.8}
+        intensity={isDark ? 1.4 : 0.9}
         color={isDark ? '#EF4444' : '#FFE8D6'}
       />
 
       {/* Dramatic rim/accent light */}
       <spotLight
         position={[0, 6, -5]}
-        intensity={isDark ? 3.0 : 1.2}
+        intensity={isDark ? 3.2 : 1.3}
         color={isDark ? '#FBBF24' : '#FFFFFF'}
         angle={0.6}
         penumbra={0.8}
@@ -135,10 +135,10 @@ export function OrbitStage({ theme, preset }: OrbitStageProps) {
   }, []);
 
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-auto" data-testid="orbit-stage">
+    <div className="absolute inset-0 w-full h-full pointer-events-auto z-10" data-testid="orbit-stage">
       <Canvas
         shadows
-        camera={{ position: [0, 1.6, 3.8], fov: 42 }}
+        camera={{ position: [0, 1.1, 2.5], fov: 40 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       >
         <LightingRig theme={theme} />
@@ -146,9 +146,9 @@ export function OrbitStage({ theme, preset }: OrbitStageProps) {
         <Suspense fallback={<LoadingFallback />}>
           <MealModel floatEnabled={!isInteracting} />
           <ContactShadows
-            position={[0, -0.65, 0]}
-            opacity={theme === 'dark' ? 0.75 : 0.45}
-            scale={6}
+            position={[0, -0.68, 0]}
+            opacity={theme === 'dark' ? 0.8 : 0.45}
+            scale={7}
             blur={2.2}
             far={1.8}
             color={theme === 'dark' ? '#000000' : '#332211'}
@@ -159,8 +159,8 @@ export function OrbitStage({ theme, preset }: OrbitStageProps) {
           ref={controlsRef}
           enablePan={false}
           enableZoom={true}
-          minDistance={1.8}
-          maxDistance={5.5}
+          minDistance={1.4}
+          maxDistance={4.2}
           minPolarAngle={Math.PI / 6} // ~30 deg
           maxPolarAngle={Math.PI / 2.15} // ~83 deg
           autoRotate={autoRotate}
