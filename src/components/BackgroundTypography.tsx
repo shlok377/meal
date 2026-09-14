@@ -23,7 +23,6 @@ const containerVariants: Variants = {
 
 const rowVariants: Variants = {
   visible: {
-    opacity: 1,
     y: 0,
     scale: 1,
     transition: {
@@ -32,7 +31,6 @@ const rowVariants: Variants = {
     },
   },
   hidden: {
-    opacity: 0,
     y: -25,
     scale: 0.98,
     transition: {
@@ -60,34 +58,38 @@ export const BackgroundTypography: React.FC<BackgroundTypographyProps> = ({
             exit="hidden"
             className="w-full text-center flex flex-col items-center justify-center space-y-[-1vw] md:space-y-[-1.5vw] translate-y-[-2vh] pointer-events-none"
           >
-            {/* Row 1 - 50% reduced opacity */}
+            {/* Row 1 (Top) - Clearly visible display text */}
             <motion.h1
               variants={rowVariants}
-              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900/40 dark:text-neutral-100/35 uppercase pointer-events-none"
+              style={{ opacity: 0.35 }}
+              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900 dark:text-neutral-100 uppercase pointer-events-none"
             >
               {title}
             </motion.h1>
 
-            {/* Row 2 - 50% reduced opacity */}
+            {/* Row 2 - Intermediate soft fade */}
             <motion.div
               variants={rowVariants}
-              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900/25 dark:text-neutral-100/20 uppercase pointer-events-none"
+              style={{ opacity: 0.22 }}
+              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900 dark:text-neutral-100 uppercase pointer-events-none"
             >
               {title}
             </motion.div>
 
-            {/* Row 3 - 50% reduced opacity */}
+            {/* Row 3 - Subtle faint fade */}
             <motion.div
               variants={rowVariants}
-              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900/15 dark:text-neutral-100/10 uppercase pointer-events-none"
+              style={{ opacity: 0.12 }}
+              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900 dark:text-neutral-100 uppercase pointer-events-none"
             >
               {title}
             </motion.div>
 
-            {/* Row 4 - 50% reduced opacity */}
+            {/* Row 4 (Bottom-most) - Guaranteed to be the LIGHTEST whisper of text */}
             <motion.div
               variants={rowVariants}
-              className="hidden lg:block font-serif font-black tracking-[-0.04em] text-[11.5vw] text-neutral-900/08 dark:text-neutral-100/05 uppercase pointer-events-none"
+              style={{ opacity: 0.05 }}
+              className="font-serif font-black tracking-[-0.04em] text-[16vw] sm:text-[14vw] md:text-[11.5vw] text-neutral-900 dark:text-neutral-100 uppercase pointer-events-none"
             >
               {title}
             </motion.div>

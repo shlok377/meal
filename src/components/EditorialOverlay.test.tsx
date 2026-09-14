@@ -4,7 +4,7 @@ import { EditorialOverlay } from './EditorialOverlay';
 import { mealData } from '../data/mealData';
 
 describe('EditorialOverlay', () => {
-  it('renders editorial categories, price, and cursive signature for combo preset', () => {
+  it('renders separated upper left Fries info and upper right Burger info cards', () => {
     render(
       <EditorialOverlay
         config={mealData}
@@ -17,44 +17,33 @@ describe('EditorialOverlay', () => {
     );
 
     expect(screen.getByText('AMERICAN CLASSIC')).toBeInTheDocument();
-    expect(screen.getByText('GOURMET COMBO')).toBeInTheDocument();
+    expect(screen.getByText(mealData.presetDetails.fries.headline)).toBeInTheDocument();
+    expect(screen.getByText(mealData.presetDetails.burger.headline)).toBeInTheDocument();
     expect(screen.getByText('@ ₹349')).toBeInTheDocument();
     expect(screen.getByText('Flavour trails')).toBeInTheDocument();
-    expect(screen.getByText(mealData.presetDetails.combo.description)).toBeInTheDocument();
+    expect(screen.getByText(mealData.narrativeCopy)).toBeInTheDocument();
   });
 
-  it('renders burger-specific information when burger preset is active', () => {
+  it('triggers onSelectPreset when upper left Fries or upper right Burger cards are clicked', () => {
+    const handleSelectPreset = vi.fn();
     render(
       <EditorialOverlay
         config={mealData}
         theme="light"
-        preset="burger"
+        preset="combo"
         onToggleTheme={vi.fn()}
-        onSelectPreset={vi.fn()}
+        onSelectPreset={handleSelectPreset}
         onOpenOrder={vi.fn()}
       />
     );
 
-    expect(screen.getByText('THE HERO')).toBeInTheDocument();
-    expect(screen.getByText('DOUBLE SMASHED ANGUS BURGER')).toBeInTheDocument();
-    expect(screen.getByText(mealData.presetDetails.burger.description)).toBeInTheDocument();
-  });
+    const friesCard = screen.getByText(mealData.presetDetails.fries.headline);
+    fireEvent.click(friesCard);
+    expect(handleSelectPreset).toHaveBeenCalledWith('fries');
 
-  it('renders fries-specific information when fries preset is active', () => {
-    render(
-      <EditorialOverlay
-        config={mealData}
-        theme="light"
-        preset="fries"
-        onToggleTheme={vi.fn()}
-        onSelectPreset={vi.fn()}
-        onOpenOrder={vi.fn()}
-      />
-    );
-
-    expect(screen.getByText('SIDES & DIP')).toBeInTheDocument();
-    expect(screen.getByText('CRISPY GOLDEN FRIES & KETCHUP')).toBeInTheDocument();
-    expect(screen.getByText(mealData.presetDetails.fries.description)).toBeInTheDocument();
+    const burgerCard = screen.getByText(mealData.presetDetails.burger.headline);
+    fireEvent.click(burgerCard);
+    expect(handleSelectPreset).toHaveBeenCalledWith('burger');
   });
 
   it('triggers onToggleTheme when theme toggle button is clicked', () => {
@@ -75,7 +64,7 @@ describe('EditorialOverlay', () => {
     expect(handleToggle).toHaveBeenCalledTimes(1);
   });
 
-  it('triggers onSelectPreset when camera preset buttons are clicked', () => {
+  it('triggers onSelectPreset when bottom camera preset pills are clicked', () => {
     const handleSelectPreset = vi.fn();
     render(
       <EditorialOverlay
