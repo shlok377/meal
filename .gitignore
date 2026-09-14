@@ -1,0 +1,19 @@
+github_key.txt
+
+# Node & Build
+node_modules/
+dist/
+.scratch/
+
+# Skills and Agent configs
+.agents/
+.agents
+.claude/
+.claude
+agent/
+agent
+skills/
+skills
+skills-lock.json
+.gemini/
+.gemini

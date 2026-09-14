@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.3);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.5);
+}
+
+/* Luxury poster typography adjustments */
+.stacked-text-stroke {
+  -webkit-text-stroke: 1px rgba(20, 20, 20, 0.15);
+}
+.dark .stacked-text-stroke {
+  -webkit-text-stroke: 1px rgba(237, 232, 223, 0.12);
+}
